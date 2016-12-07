@@ -1,8 +1,10 @@
-##Checkin
+##Checkin by @rodru at www.codi.com.ar
 *The coolest Open Source, pure-Python, MySQL-Enabled Checkin System around!*
 
 ###What is Checkin?
-Checkin is a simple script that enables admins of work, school, or other environments to keep track of peoples status. It's a simple program which tracks users in MySQL, and allows them to checkin once per day. It records the wide timestamp of all checkins.
+Keep track of checkin and checkout of people
+Checkin is a simple script dev some time ago by b1naryth1ef that enables admins of work, school, or other environments to keep track of peoples status. It's a simple program which tracks users in MySQL, and allows them to checkin once per day. It records the wide timestamp of all checkins.
+The original code only tracked checkin, i added checkout functions, and implement them
 
 ###Why Checkin?
 The big reason, is because Checkin is 100% Open Source, and free. And if that doesn't get you, get this. It's constantly in development which means it's always getting better. You can run checkin on practically any computer or os,  and it's built in a language thats easy to understand and develop in. 
@@ -33,7 +35,7 @@ Checkin also has some precompiled versions of the above requirements. They may o
 To install and setup the database and config automatically, just run ```python install.py``` and follow the prompts
 
 ###Thanks / Credits
-Thanks to the people who made those awesome scripts listed above. Without them this would have been a lot harder of a project. If you like the script, [follow me](http://twitter.com/b1naryth1ef) on twitter and tell me!
+Thanks to the people who made those awesome scripts listed above. Without them this would have been a lot harder of a project. If you like the script, [follow me](http://twitter.com/rodru) on twitter and tell me!
 
 ###N.B.
-The script is still a little finicky. However, thanks too @johnreem you can run help() on the db and other things to learn how to help develop this stuff. Officially, we don't have any major TODOs, other then a better stats system. If you have any ideas, go ahead and fork the code! Pull request are almost always added.
+The script is still a little finicky. However, thanks too @b1naryth1ef you can run help() on the db and other things to learn how to help develop this stuff. Officially, we don't have any major TODOs, other then a better stats system. If you have any ideas, go ahead and fork the code! Pull request are almost always added.

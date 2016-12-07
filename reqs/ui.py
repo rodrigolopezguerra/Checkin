@@ -24,6 +24,10 @@ def ok():
 	"""User Checked in message [Green]"""
 	print colored("-------------USER CHECKED IN-------------", green)
 
+def out_ok():
+	"""User Checked in message [Green]"""
+	print colored("-------------USER CHECKED OUT-------------", green)
+
 def fail():
 	"""Invalid User ID message [Red, Bold]"""
 	print colored("-------------INVALID USER ID-------------", red, attrs=['bold'])
@@ -36,11 +40,11 @@ def err(err):
 
 def srch1():
 	"""Name/Checkins display for search. [cyan, bold]"""
-	print colored("NAME           CHECK-INS", cyan, attrs=['bold'])
+	print colored("NAME           CHECK-INS    CHECK-OUTS", cyan, attrs=['bold'])
 
 def srch2():
 	"""Year/Month/Day/Time display for search. [cyan, bold]"""
-	print colored("YEAR | MONTH | DAY | TIME", cyan, attrs=['bold'])
+	print colored("YEAR | MONTH | DAY | TIME ", cyan, attrs=['bold'])
 
 def srch():
 	"""Search Mode Display. [Green outline, magenta intext(bold)]"""
@@ -48,10 +52,22 @@ def srch():
 	print colored("---> ",green)+colored("SEARCH MODE", magenta, attrs=['bold'])+colored(" <---", green)
 	print colored("=====================",green)	
 
+def pre_chk():
+	"""PRE Checkin-out Mode Display. [Green outline, magenta intext(bold)]"""
+	print colored("=====================",green)
+	print colored("--->",green)+colored("1 = CHECK IN MODE - 2 = CHECK OUT MODE", magenta, attrs=['bold'])+colored("<---", green,)
+	print colored("=====================",green)
+
 def chk():
 	"""Checkin Mode Display. [Green outline, magenta intext(bold)]"""
 	print colored("=====================",green)
 	print colored("--->",green)+colored("CHECK IN MODE", magenta, attrs=['bold'])+colored("<---", green,)
+	print colored("=====================",green)
+
+def out_chk():
+	"""Checkout Mode Display. [Green outline, magenta intext(bold)]"""
+	print colored("=====================",green)
+	print colored("--->",green)+colored("CHECK OUT MODE", magenta, attrs=['bold'])+colored("<---", green,)
 	print colored("=====================",green)
 
 def lst1():
@@ -62,15 +78,19 @@ def lst1():
 
 def lst2():
 	"""Name, Checkins"""
-	print colored("NAME        CHECK-INS", cyan, attrs=['bold'])
+	print colored("NAME        CHECK-INS           CHECK-OUTS", cyan, attrs=['bold'])
 
 def sep():
 	""" Red Seperator: |"""
 	print colored("|", red, attrs=['bold'])
 
-def statstime():
+def statstimein():
 	"""Stats display of TIME tag. [Cyan,Bold]"""
-	return colored("TIME:",cyan,attrs=['bold'])
+	return colored("TIME IN:",cyan,attrs=['bold'])
+
+def statstimeout():
+	"""Stats display of TIME tag. [Cyan,Bold]"""
+	return colored("TIME OUT:",cyan,attrs=['bold'])
 
 def statsid():
 	"""Stats display of ID tag. [Cyan, Bold]"""
@@ -84,6 +104,10 @@ def mont1(month):
 def chkold():
 	"""User already checked in text [Red]"""
 	print colored("-------------USER ALREADY CHECKED IN!-------------", red, attrs=['bold'])
+
+def out_chkold():
+	"""User already checkout in text [Red]"""
+	print colored("-------------USER ALREADY CHECKED OUT!-------------", red, attrs=['bold'])
 
 def newy1():
 	"""New User Menu"""

@@ -23,9 +23,7 @@ def end(user,passwd,server,tdb):
 	f.write("password = \"%s\"\n" % (passwd))
 	print "Done!"
 	print "\n All done!"
-	raw_input("Press [ENTER] to try starting the script!")
-	import start
-	start.init()
+	print "\n Now launch the start program"
 
 def dbtest(user,passwd,server,tdb):
 	#Initiate curser
@@ -40,31 +38,51 @@ def dbinstall(user,passwd,server,tdb):
 	db = MySQLdb.connect(user=user, passwd=passwd, host=server, db=tdb)
 	c = db.cursor()
 	def tables():
-		c.execute("""CREATE TABLE `checkins` (
-	  `id` int(100) NOT NULL,
-	  `year` int(100) NOT NULL,
-	  `month` int(100) NOT NULL,
-	  `day` int(100) NOT NULL,
-	  `time` char(100) NOT NULL
-	) ENGINE=MyISAM DEFAULT CHARSET=latin1;""")
-		c.execute("""CREATE TABLE `users` (
-	  `id` int(11) NOT NULL AUTO_INCREMENT,
-	  `name` char(100) DEFAULT NULL,
-	  `first_name` char(100) DEFAULT NULL,
-	  `last_name` char(100) DEFAULT NULL,
-	  `checkins` int(11) DEFAULT NULL,
-	  PRIMARY KEY (`id`)
-	) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;""")
+		r = checkTableExists(db, tdb,'checkins')
+		if r is False :
+			c.execute("""CREATE TABLE `checkins` (
+		  `id` int(100) NOT NULL,
+		  `year` int(100) NOT NULL,
+		  `month` int(100) NOT NULL,
+		  `day` int(100) NOT NULL,
+		  `time` char(100) NOT NULL
+		) ENGINE=MyISAM DEFAULT CHARSET=latin1;""")
+		else:
+			print "Table checkins already exists"
+		r = checkTableExists(db, tdb,'checkouts')
+		if r is False:
+			c.execute("""CREATE TABLE `checkouts` (
+				  `id` int(100) NOT NULL,
+				  `year` int(100) NOT NULL,
+				  `month` int(100) NOT NULL,
+				  `day` int(100) NOT NULL,
+				  `time` char(100) NOT NULL
+				) ENGINE=MyISAM DEFAULT CHARSET=latin1;""")
+		else:
+			print "Table checkouts already exists"
+		r = checkTableExists(db, tdb,'users')
+		if r is False:
+			c.execute("""CREATE TABLE `users` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `name` char(100) DEFAULT NULL,
+				  `first_name` char(100) DEFAULT NULL,
+				  `last_name` char(100) DEFAULT NULL,
+				  `checkins` int(11) DEFAULT NULL,
+				  `checkouts` int(11) DEFAULT NULL,
+				  PRIMARY KEY (`id`)
+				) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;""")
+		else:
+			print "Table users already exists"
 		db.commit()
 		end(user,passwd,server,tdb)
-	z = raw_input("Script will create tables 'User' and 'Checkins'. Is this ok? [Y/N]:  ").lower()
+	z = raw_input("Script will create tables 'User' , 'Checkins' and 'Checkouts'. Is this ok? [Y/N]:  ").lower()
 	if z == "y":
 		tables()
 	elif z =="n":
 		sys.exit()
 	else:
 		print "Didnt get that"
-		install(user,passwd,server,tdb)
+		dbinstall(user,passwd,server,tdb)
 	
 	
 
@@ -78,9 +96,11 @@ def config():
 		c_user = "root"
 	c_password = getpass.getpass("MySQL Password (Hidden):  ")
 	c_database = raw_input("MySQL Database [new] to create new:  ").lower()
-	if c_database == "new":
-		db_create(c_server,c_user,c_password)
+	if c_database == "new" or c_database == '':
 		c_db = "pycheckins"
+		f = dbtest(c_user, c_password, c_server, c_db)
+		if f is False:
+			db_create(c_server,c_user,c_password)
 	else:
 		c_db = c_database
 	print "Okay... Testing config...",
@@ -97,6 +117,20 @@ def config():
 			config()
 		else:
 			sys.exit()
+
+def checkTableExists(dbcon, db_b, tablename):
+	dbcur = dbcon.cursor()
+	dbcur.execute("""
+		SELECT COUNT(*)
+		FROM information_schema.tables
+		WHERE table_name = '{0}' AND table_schema = '{1}'
+		""".format(tablename.replace('\'', '\'\''),db_b.replace('\'', '\'\'')))
+	if dbcur.fetchone()[0] > 0:
+		dbcur.close()
+		return True
+
+	dbcur.close()
+	return False
 
 def main():
 	x = raw_input("Ready to install? [Y/N]:  ").lower()
