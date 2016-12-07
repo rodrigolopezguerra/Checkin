@@ -77,7 +77,7 @@ def config():
 	if c_user == "":
 		c_user = "root"
 	c_password = getpass.getpass("MySQL Password (Hidden):  ")
-	c_database = raw_input("MySQL Database [NEW] to create new:  ").lower()
+	c_database = raw_input("MySQL Database [new] to create new:  ").lower()
 	if c_database == "new":
 		db_create(c_server,c_user,c_password)
 		c_db = "pycheckins"
